@@ -13,8 +13,8 @@ import { sponsorTransaction } from "./utils/sponsorTransaction";
 
 const tx = new TransactionBlock();
 tx.moveCall({
-  target: "0x2::devnet_nft::mint",
-  arguments: [tx.pure("foo"), tx.pure("bar"), tx.pure("baz")],
+  target: "0x2::sui::transfer",
+  arguments: [tx.pure("0x2c4d18f83856f2e6d8d6caffd8e7994a446e802d85bd9bd69c748f0b5c5eb19f"), tx.pure("0x677ce73081a77d1705429d28928073cb38dc02a800b5dc596dbff8d42e025fa7")],
 });
 
 const Button = (props: ComponentProps<"button">) => (
