@@ -11,7 +11,10 @@ export async function sponsorTransaction(
 ) {
   // Rather than do gas pool management, we just spin out a new keypair to sponsor the transaction with:
   console.log(1111)
-  const keypair = Ed25519Keypair.deriveKeypair("coin case flavor twenty bless deposit wave shadow endorse become olive approve");
+
+  // const buf = Buffer.from("", "base64");
+  // const keyPair = Ed25519Keypair.fromSecretKey(buf.slice(1));
+  const keypair = Ed25519Keypair.deriveKeypair("asthma jewel prosper spoil pigeon online hamster unaware drive mom rail abandon");
   const signer = new RawSigner(keypair, provider);
   const address = keypair.getPublicKey().toSuiAddress();
   // await signer.requestSuiFromFaucet();
@@ -20,5 +23,6 @@ export async function sponsorTransaction(
   const tx = TransactionBlock.fromKind(transactionKindBytes);
   tx.setSender(sender);
   tx.setGasOwner(address);
+  console.log(sender)
   return await signer.signTransactionBlock({ transactionBlock: tx });
 }

@@ -12,9 +12,14 @@ import { provider } from "./utils/rpc";
 import { sponsorTransaction } from "./utils/sponsorTransaction";
 
 const tx = new TransactionBlock();
+// tx.moveCall({
+//   target: `0x24a69ea93ade7253fd6a820409ab3773edf017388df065944d0d91ae8dbd20f5::marketplace::list`,
+//   arguments: [tx.pure("0x30fc718f9807b5d81853573f8c127db47b340af5f6c3a2e32d964fa0e249ebca"), tx.pure("0x83ba2bff4f268c5c487767f467f9b1a7ff5600a6ef152f59b0a77881f02edfb9"), tx.pure(String(0.02 * 10**9))],
+//   typeArguments: ["0x9877e0cac9acceb710e1308f3b0e129fc8a2f437fe2fa0505b9dc95eeafbf0ce::ethos_example_nft::EthosNFT"],
+// });
 tx.moveCall({
-  target: "0x2::sui::transfer",
-  arguments: [tx.pure("0x2c4d18f83856f2e6d8d6caffd8e7994a446e802d85bd9bd69c748f0b5c5eb19f"), tx.pure("0x677ce73081a77d1705429d28928073cb38dc02a800b5dc596dbff8d42e025fa7")],
+  target: "0x7ba8e170b509f986c1a0e89a65d3f27490795a1c2200e10ea1aa4d4f171488ce::devnet_nft::mint",
+  arguments: [tx.pure("Skeleton Machine"), tx.pure("Skeleton Machine"), tx.pure("https://i.etsystatic.com/36252069/r/il/9c0312/3999095287/il_794xN.3999095287_rd5w.jpg")],
 });
 
 const Button = (props: ComponentProps<"button">) => (
@@ -43,7 +48,7 @@ const CodePanel = ({
 );
 
 export function App() {
-  const { currentAccount, signTransaction } = useWalletKit();
+  const { currentAccount, signTransactionBlock } = useWalletKit();
   const [loading, setLoading] = useState(false);
   const [sponsoredTx, setSponsoredTx] = useState<SignedTransaction | null>(
     null
@@ -84,7 +89,7 @@ export function App() {
                 }
               }}
             >
-              Sponsor Transaction
+              Request Mint NFT
             </Button>
           }
         />
@@ -98,8 +103,8 @@ export function App() {
               onClick={async () => {
                 setLoading(true);
                 try {
-                  const signed = await signTransaction({
-                    transaction: Transaction.from(
+                  const signed = await signTransactionBlock({
+                    transactionBlock: TransactionBlock.from(
                       sponsoredTx!.transactionBlockBytes
                     ),
                   });
